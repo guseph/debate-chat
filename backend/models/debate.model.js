@@ -10,8 +10,10 @@ const Schema = mongoose.Schema;
 // ~~ future data: text_conversation (array of strings)
 const debateSchema = new Schema({
     topic: {type: String, required: true},
-    users: {type: Array, required: true},
+    proponent: {type: String, required: true},
+    opponent: {type: String, required: true},
     date: {type: Date, required: true},
+    conversation: {type:Array, required: true},
 } ,
 {timestamps: true,}
 );

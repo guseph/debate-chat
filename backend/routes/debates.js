@@ -3,7 +3,7 @@ const router = require('express').Router();
 let Debate = require('../models/debate.model');
 
 // endpoint
-// handles HTTP GET requests
+// gets all Debates
 router.route('/').get((req, res) => {
     Debate.find()  // gets all users in database, returns promise
         .then(debates => res.json(debates))  // return something in json format
@@ -11,14 +11,16 @@ router.route('/').get((req, res) => {
 });
 
 // endpoint
-// handles HTTP POST requests
+// Posts a new Debate
 router.route('/add').post((req, res) => {
     // grab data from req JSON
     const topic = req.body.topic;
-    const users = req.body.users;
+    const proponent = req.body.proponent;
+    const opponent = req.body.opponent;
     const date = Date.parse(req.body.date);
+    const conversation = req.body.conversation;
     
-    const newDebate = new Debate({topic, users, date});  // create a new Debate
+    const newDebate = new Debate({topic, proponent, opponent, date, conversation});  // create a new Debate
 
 
     newDebate.save()  // new Debate is saved to database
@@ -28,7 +30,7 @@ router.route('/add').post((req, res) => {
 
 // endpoint
 // :id is a variable name, is just the id attached to the end of "host_url"/debates/
-// handles HTTP GET requests with id
+// Gets information about a specific Debate by _id
 router.route('/:id').get((req, res) => {
     Debate.findById(req.params.id)
       .then(debate => res.json(debate))
@@ -36,7 +38,7 @@ router.route('/:id').get((req, res) => {
 });
 
 // endpoint
-// handles HTTP DELETE requests with id
+// Deletes a Debate by its _id
 router.route('/:id').delete((req, res) => {
     Debate.findByIdAndDelete(req.params.id)
         .then(() => res.json('Debate deleted.'))
@@ -44,13 +46,15 @@ router.route('/:id').delete((req, res) => {
 });
 
 // endpoint
-// handles HTTP POST requests with UPDATE and ID
+// Updates all components of a Debate by its _id
 router.route('/update/:id').post((req, res) => {
     Debate.findById(req.params.id)
         .then(debate => {
         debate.topic = req.body.topic;
-        debate.users = req.body.users;
+        debate.proponent = req.body.proponent;
+        debate.opponent = req.body.opponent;
         debate.date = Date.parse(req.body.date);
+        debate.conversation = req.body.conversation;
         // currently updates all data, may refactor to be selective
 
         debate.save()
@@ -59,5 +63,20 @@ router.route('/update/:id').post((req, res) => {
         })
         .catch(err => res.status(400).json('Error: ' + err));
 });
+
+// endpoint
+// Updates only a debate's conversation parameter via _id
+// Note the url path is slightly different
+router.route('/update/convo/:id').post((req, res) => {
+    Debate.findById(req.params.id)
+        .then(debate => {
+            debate.conversation = req.body.conversation;
+
+            debate.save()
+                .then(() => res.json('Debate updated!'))
+                .catch(err => res.status(400).json('Error: ' + err));
+        })
+        .catch(err => res.status(400).json('Error: ' + err));
+})
 
 module.exports = router;  // exporting the router
