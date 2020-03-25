@@ -13,6 +13,7 @@ router.route('/').get((req, res) => {
 // endpoint
 // handles incoming HTTP post requests
 router.route('/add').post((req, res) => {
+    console.log("Called backend routea");
     const username = req.body.username;  // grab username from req JSON
     
     const newUser = new User({username});  // create a new User

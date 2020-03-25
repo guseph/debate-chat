@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
+import axios from 'axios';
 
 export default class CreateDebate extends Component{
     constructor (props){
@@ -25,9 +26,15 @@ export default class CreateDebate extends Component{
 
     // alter this later
     componentDidMount(){
-        this.setState(
-            {username: "test user"}
-        )
+        axios.get('http://localhost:5000/users/')
+            .then(response =>{
+                if(response.data.length > 0){
+                    this.setState({
+                        users: response.data.map(user => user.username),
+                        username: response.data[0].username
+                    })
+                }
+            })
     }
 
     onChangeTopic(e){
@@ -76,6 +83,9 @@ export default class CreateDebate extends Component{
         // will submit to database later
         console.log(debate)
 
+        axios.post('http://localhost:5000/debates/add', debate)
+            .then(res => console.log(res.data));
+
         window.location = "/";
     }
 
@@ -93,14 +103,32 @@ export default class CreateDebate extends Component{
                         </input>
                     </div>
 
-                    <div className = "form-group">
+                    {/* <div className = "form-group">
                         <label>User: </label>
                         <input type = "text"
                                 className = "form-control"
                                 //value = {this.state.username}
                                 onChange = {this.onChangeUser}>
                         </input>
-                    </div>
+                    </div> */}
+
+                    <select ref = "userInput"
+                            required
+                            className = "form-control"
+                            value = {this.state.username}
+                            onChange = {this.onChangeUser}>
+                        {/* map returns something for each item in the array*/}
+
+                        {
+                            this.state.users.map(function(user){
+                                return <option
+                                        key = {user}
+                                        value = {user}>
+                                            {user}
+                                        </option>
+                            })
+                        }
+                            </select>
 
                     <div className = "form-group">
                         <label>Date: </label>
