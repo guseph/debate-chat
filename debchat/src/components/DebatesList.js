@@ -9,7 +9,7 @@ const Debate = props => (
         <td>{props.debate.opponent}</td>
         <td>{props.debate.date.substring(0,10)}</td>
         <td>
-            <Link to = {"debates/update/" + props.debate._id}>EDIT</Link> |  <a href = "/" onClick = {() => {props.deleteDebate(props.debate._id)}}>delete</a>
+            <Link to = {"debates/update/" + props.debate._id}>edit</Link> |  <a href = "/" onClick = {() => {props.deleteDebate(props.debate._id)}}>delete</a>
         </td>
     </tr>
     
@@ -34,6 +34,10 @@ export default class DebatesList extends Component{
             .catch((error) =>{
                 console.log(error);
             })
+
+        this.setState({
+            debates: this.state.debates.filter(el => el.closed !== true)
+        })
     }
 
     deleteDebate(id){
@@ -58,7 +62,7 @@ export default class DebatesList extends Component{
     render(){
         return(
             <div>
-                <h1> Logged Debates </h1>
+                <h1> Open Debates </h1>
                 <table className = "table">
                     <thead className = "thead-light">
                         <tr>

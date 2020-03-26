@@ -5,7 +5,10 @@ export default class NavBar extends Component{
     render(){
         return(
             <nav className = "navbar navbar-dark bg-dark navbar-expand-lg">
-                <Link to = "/" className = "navbar-brand">DebateChat</Link>
+                <Link to = "/" className = "navbar-brand"> 
+                    {/* <img src="../../debatelogo.png" width="30" height="30" alt=""/> */}
+                    DebateChat
+                </Link>
                 <div className = "collapse navbar-collapse">
                     <ul className = "navbar-nav mr-auto">
                         <li className = "navbar-item">

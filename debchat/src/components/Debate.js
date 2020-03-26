@@ -41,7 +41,7 @@ export default class Debate extends Component{
     render(){
         return(
             <div className = "container">
-                <div class = "container" id = "header">
+                <div className = "container" id = "header">
                     <div className = "row justify-content-center">
                         <h1>{this.state.debateName}</h1>
                     </div>
@@ -49,7 +49,7 @@ export default class Debate extends Component{
                         <h2><i>{this.state.proponent} v. {this.state.opponent}</i></h2>
                     </div>
                     <div className = "row justify-content-center">
-                        <emphasis>{this.state.date.toString().substring(0,10)}</emphasis>
+                        <i>{this.state.date.toString().substring(0,10)}</i>
                     </div>
                 </div>
                 <hr></hr>

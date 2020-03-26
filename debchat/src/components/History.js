@@ -21,12 +21,12 @@ export default class History extends Component{
         this.state = {debates: []}
     }
 
+    // get and store closed debates in state
     componentDidMount(){
-    {/* Possibly change route to get only closed debates! */}
         axios.get('http://localhost:5000/debates/')
             .then(response =>{
                 this.setState({
-                    debates: response.data
+                    debates: response.data.filter(el => el.closed === true)
                 })
             })
             .catch((error) =>{
@@ -36,9 +36,16 @@ export default class History extends Component{
 
 
     debateList(){
-        return this.state.debates.map(currentdebate => {
-            return <Debate debate = {currentdebate} deleteDebate = {this.deleteDebate} key = {currentdebate._id} />
-        })
+        if (this.state.debates.length === 0)
+        {
+            return(<tr><td>There are no closed debates</td></tr>);
+        }
+        else{
+            return this.state.debates.map(currentdebate => {
+                return <Debate debate = {currentdebate} deleteDebate = {this.deleteDebate} key = {currentdebate._id} />
+            });
+        }
+       
     }
 
     render(){

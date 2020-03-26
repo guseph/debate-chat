@@ -93,7 +93,7 @@ export default class CreateDebate extends Component{
         axios.post('http://localhost:5000/debates/add', debate)
             .then(res => console.log(res.data));
 
-        window.location = "/";
+        window.location = "/debates";
     }
 
     render(){
@@ -106,6 +106,7 @@ export default class CreateDebate extends Component{
                         <input type = "text"
                                 className = "form-control"
                                 value = {this.state.topic}
+                                required
                                 onChange = {this.onChangeTopic}>
                         </input>
                     </div>
@@ -118,7 +119,7 @@ export default class CreateDebate extends Component{
                                 value = {this.state.proponent}
                                 onChange = {this.onChangeProponent}>
                             {/* map returns something for each item in the array*/}
-                            <option value="">--Please choose an option--</option>
+                            <option value="">--Please choose a user--</option>
 
                             {
                                 this.state.users.map(function(user){
@@ -140,7 +141,7 @@ export default class CreateDebate extends Component{
                             value = {this.state.opponent}
                             onChange = {this.onChangeOpponent}>
     x                    {/* map returns something for each item in the array*/}
-                        <option value="">--Please choose an option--</option>
+                        <option value="">--Please choose a user--</option>
 
                         {
                             this.state.users.map(function(user){
