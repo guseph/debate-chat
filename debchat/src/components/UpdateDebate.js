@@ -122,7 +122,6 @@ export default class UpdateDebate extends Component{
                     </div>
 
 
-            
                     <div className = "form-group">
                         <label>Proponent: </label>
                         <select 

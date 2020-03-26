@@ -4,7 +4,7 @@ import {Link} from 'react-router-dom';
 
 const Debate = props => (
     <tr>
-        <td>{props.debate.topic}</td>
+        <td><Link to = {"debates/" + props.debate._id}>{props.debate.topic}</Link></td>
         <td>{props.debate.proponent}</td>
         <td>{props.debate.opponent}</td>
         <td>{props.debate.date.substring(0,10)}</td>
@@ -49,7 +49,7 @@ export default class DebatesList extends Component{
 
     debateList(){
         return this.state.debates.map(currentdebate => {
-            return <Debate debate = {currentdebate} deleteExercise = {this.deleteExercise} key = {currentdebate._id} />
+            return <Debate debate = {currentdebate} deleteDebate = {this.deleteDebate} key = {currentdebate._id} />
         })
     }
 

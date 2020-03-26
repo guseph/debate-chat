@@ -12,6 +12,9 @@ export default class NavBar extends Component{
                             <Link to = "/" className = "nav-link">Debates</Link>
                         </li>
                         <li>
+                            <Link to ="/rules" className = "nav-link">Rules</Link>
+                        </li>
+                        <li>
                             <Link to = "/debates/add" className = "nav-link"> Create New Debate</Link>
                         </li>
                         <li>
