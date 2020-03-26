@@ -35,7 +35,7 @@ export default class CreateDebate extends Component{
                 if(response.data.length > 0){
                     this.setState({
                         users: response.data.map(user => user.username),
-                        username: response.data[0].username
+                        //username: response.data[0].username
                     })
                 }
             })
@@ -82,7 +82,8 @@ export default class CreateDebate extends Component{
             proponent: this.state.proponent,
             opponent: this.state.opponent,
             date: this.state.date,
-            conversation: []
+            conversation: [],
+            closed: false
 
         }
 
@@ -98,7 +99,7 @@ export default class CreateDebate extends Component{
     render(){
         return(
             <div>
-                <h3>Create New Debate</h3>
+                <h1>Create New Debate</h1>
                 <form onSubmit = {this.onSubmit}>
                     <div className = "form-group">
                         <label>Topic: </label>
@@ -117,6 +118,7 @@ export default class CreateDebate extends Component{
                                 value = {this.state.proponent}
                                 onChange = {this.onChangeProponent}>
                             {/* map returns something for each item in the array*/}
+                            <option value="">--Please choose an option--</option>
 
                             {
                                 this.state.users.map(function(user){
@@ -138,6 +140,8 @@ export default class CreateDebate extends Component{
                             value = {this.state.opponent}
                             onChange = {this.onChangeOpponent}>
     x                    {/* map returns something for each item in the array*/}
+                        <option value="">--Please choose an option--</option>
+
                         {
                             this.state.users.map(function(user){
                                 return <option

@@ -1,30 +1,28 @@
 import React, {Component} from 'react';
 import axios from 'axios';
-import {Link} from 'react-router-dom';
+//import {Link} from 'react-router-dom';
 
 const Debate = props => (
     <tr>
-        <td><Link to = {"debates/display/" + props.debate._id}>{props.debate.topic}</Link></td>
+        {/*
+        CHANGE LATER! <td><Link to = {"debates/display/" + props.debate._id}>{props.debate.topic}</Link></td>*/}
+        <td>{props.debate.topic}</td>
         <td>{props.debate.proponent}</td>
         <td>{props.debate.opponent}</td>
-        <td>{props.debate.date.substring(0,10)}</td>
-        <td>
-            <Link to = {"debates/update/" + props.debate._id}>EDIT</Link> |  <a href = "/" onClick = {() => {props.deleteDebate(props.debate._id)}}>delete</a>
-        </td>
+        <td>{props.debate.date.substring(0,10)}</td> 
+        <td><button>View</button></td>
     </tr>
-    
 )
 
-export default class DebatesList extends Component{
+export default class History extends Component{
     constructor (props){
         super(props);
-
-        this.deleteDebate = this.deleteDebate.bind(this);
         
         this.state = {debates: []}
     }
 
     componentDidMount(){
+    {/* Possibly change route to get only closed debates! */}
         axios.get('http://localhost:5000/debates/')
             .then(response =>{
                 this.setState({
@@ -36,18 +34,6 @@ export default class DebatesList extends Component{
             })
     }
 
-    deleteDebate(id){
-        axios.delete('http://localhost:5000/debates/'+id)
-            .then(res => console.log(res.data));
-
-        // get rid of the element from the table by resetting the state
-        // puts all elements back intot the state except the one we deleted
-        this.setState({
-            debates: this.state.debates.filter(el => el._id !== id)
-        })
-
-        window.location = "/debates";
-    }
 
     debateList(){
         return this.state.debates.map(currentdebate => {
@@ -66,7 +52,7 @@ export default class DebatesList extends Component{
                             <th>Proponent</th>
                             <th>Opponent</th>
                             <th>Date</th>
-                            <th>Options</th>
+                            <th>Actions</th>
                         </tr>
                     </thead>
                     <tbody>

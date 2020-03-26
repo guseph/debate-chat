@@ -20,6 +20,9 @@ export default class NavBar extends Component{
                         <li>
                             <Link to ="/users/add" className = "nav-link">Create User</Link>
                         </li>
+                        <li>
+                            <Link to ="/debates/history" className = "nav-link">Debate History</Link>
+                        </li>
                     </ul>
                 </div>
             </nav>

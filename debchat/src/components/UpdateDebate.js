@@ -95,7 +95,8 @@ export default class UpdateDebate extends Component{
             proponent: this.state.proponent,
             opponent: this.state.opponent,
             date: this.state.date,
-            conversation: []
+            conversation: [],
+            closed: false
 
         }
 
@@ -104,7 +105,7 @@ export default class UpdateDebate extends Component{
         axios.post('http://localhost:5000/debates/update/' + this.props.match.params.id, debate)
             .then(res => console.log(res.data));
 
-        //window.location = "/";
+        window.location = "/debates";
     }
 
     render(){
@@ -128,7 +129,8 @@ export default class UpdateDebate extends Component{
                                 required
                                 className = "form-control"
                                 value = {this.state.proponent}
-                                onChange = {this.onChangeProponent}>
+                                onChange = {this.onChangeProponent}
+                            >
                             {/* map returns something for each item in the array*/}
 
                             {

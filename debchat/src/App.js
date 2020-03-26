@@ -10,6 +10,7 @@ import CreateUser from "./components/CreateUser.js";
 import Rules from "./components/Rules.js";
 import Debate from "./components/Debate.js";
 import Home from "./components/Home.js";
+import History from "./components/History.js";
 
 
 function App() {
@@ -25,6 +26,7 @@ function App() {
           <Route path = "/users/add" exact component = {CreateUser} />
           <Route path = "/rules" exact component = {Rules} />
           <Route path = "/debates/display/:id" exact component = {Debate} />
+          <Route path = "/debates/history" exact component = {History} />
 
       </div>
       
