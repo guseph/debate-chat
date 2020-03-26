@@ -5,7 +5,8 @@ import {Link} from 'react-router-dom';
 const Debate = props => (
     <tr>
         <td>{props.debate.topic}</td>
-        <td>{props.debate.users}</td>
+        <td>{props.debate.proponent}</td>
+        <td>{props.debate.opponent}</td>
         <td>{props.debate.date.substring(0,10)}</td>
         <td>
             <Link to = {"debates/update/" + props.debate._id}>EDIT</Link> |  <a href = "/" onClick = {() => {props.deleteDebate(props.debate._id)}}>delete</a>
@@ -60,7 +61,8 @@ export default class DebatesList extends Component{
                     <thead className = "thead-light">
                         <tr>
                             <th>Topic</th>
-                            <th>Users</th>
+                            <th>Proponent</th>
+                            <th>Opponent</th>
                             <th>Date</th>
                             <th>Options</th>
                         </tr>

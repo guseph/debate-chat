@@ -8,18 +8,20 @@ export default class UpdateDebate extends Component{
         super(props);
 
         this.onChangeTopic = this.onChangeTopic.bind(this);
-        this.onChangeUser = this.onChangeUser.bind(this);
+        this.onChangeProponent = this.onChangeProponent.bind(this);
+        this.onChangeOpponent = this.onChangeOpponent.bind(this);
         this.onChangeDate = this.onChangeDate.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
 
         this.state = {
             // database model
             topic: '',
-            users: [],
+            proponent: '',
+            opponent: '',
             date: new Date(), 
 
             // other properties
-         //    users: [],
+             users: [],
              username: ""
         }
     }
@@ -30,13 +32,16 @@ export default class UpdateDebate extends Component{
             .then(response => {
                 this.setState({
                     topic: response.data.topic,
-                    users: response.data.users,
+                    proponent: response.data.proponent,
+                    opponent: response.data.opponent,
                     date: new Date(response.data.date)
                 })
             })
             .catch(function (error){
                 console.log(error);
             })
+
+        // get list of users for the dropdown
 
         axios.get('http://localhost:5000/users/')
             .then(response =>{
@@ -49,6 +54,7 @@ export default class UpdateDebate extends Component{
     }
 
     onChangeTopic(e){
+        console.log("changed topic to " + e.target.value);
         this.setState(
             {
                 topic: e.target.value
@@ -56,15 +62,23 @@ export default class UpdateDebate extends Component{
         );
     }
 
-    onChangeUser(e){
+    onChangeProponent(e){
         this.setState(
             {
-                username: e.target.value
+                proponent: e.target.value
             }
         );
     }
 
+    onChangeOpponent(e){
+        console.log("changed opponent to " + e.target.value);
+        this.setState({
+            opponent: e.target.value
+        });
+    }
+
     onChangeDate(date){
+        console.log("changed date");
         this.setState(
             {
                 date: date
@@ -73,33 +87,24 @@ export default class UpdateDebate extends Component{
     }
 
     onSubmit(e){
+        console.log("Submitting!");
         e.preventDefault();
-
-        // add the user that creates the debate to the list of users in the debate obj
-
-        // THIS NEEDS TO BE CHANGED TO WORK WITH THE ARRAY OF USERS IF THE USER IS CHANGED??
-        let newUserList = this.state.users;
-        newUserList.push(this.state.username);
-        this.setState(
-            {
-                users: newUserList
-            }
-        );
         
         const debate = {
             topic: this.state.topic,
-            users: this.state.users,
-            date: this.state.date
+            proponent: this.state.proponent,
+            opponent: this.state.opponent,
+            date: this.state.date,
+            conversation: []
 
         }
 
-        // will submit to database later
         console.log(debate)
 
-        axios.post('http://localhost:5000/debates/update' + this.props.match.params.id, debate)
+        axios.post('http://localhost:5000/debates/update/' + this.props.match.params.id, debate)
             .then(res => console.log(res.data));
 
-        window.location = "/";
+        //window.location = "/";
     }
 
     render(){
@@ -116,32 +121,50 @@ export default class UpdateDebate extends Component{
                         </input>
                     </div>
 
-                    {/* <div className = "form-group">
-                        <label>User: </label>
-                        <input type = "text"
+
+            
+                    <div className = "form-group">
+                        <label>Proponent: </label>
+                        <select 
+                                required
                                 className = "form-control"
-                                //value = {this.state.username}
-                                onChange = {this.onChangeUser}>
-                        </input>
-                    </div> */}
+                                value = {this.state.proponent}
+                                onChange = {this.onChangeProponent}>
+                            {/* map returns something for each item in the array*/}
 
-                    <select ref = "userInput"
-                            required
-                            className = "form-control"
-                            value = {this.state.username}
-                            onChange = {this.onChangeUser}>
-                        {/* map returns something for each item in the array*/}
+                            {
+                                this.state.users.map(function(user){
+                                    return <option
+                                            key = {user}
+                                            value = {user}>
+                                                {user}
+                                            </option>
+                                })
+                            }
+                        </select>
+                    </div>
 
-                        {
-                            this.state.users.map(function(user){
-                                return <option
-                                        key = {user}
-                                        value = {user}>
-                                            {user}
-                                        </option>
-                            })
-                        }
-                            </select>
+                    <div className = "form-group">
+                        <label>Opponent: </label>
+                        <select 
+                                required
+                                className = "form-control"
+                                value = {this.state.opponent}
+                                onChange = {this.onChangeOpponent}>
+                            {/* map returns something for each item in the array*/}
+
+                            {
+                                this.state.users.map(function(user){
+                                    return <option
+                                            key = {user}
+                                            value = {user}>
+                                                {user}
+                                            </option>
+                                })
+                            }
+                        </select>
+                    </div>
+                    
 
                     <div className = "form-group">
                         <label>Date: </label>
@@ -154,7 +177,7 @@ export default class UpdateDebate extends Component{
                     </div>
 
                     <div className = "form-group">
-                        <input type = "submit" value = "Edit Exercise Log" className = "btn btn-primary"></input>
+                        <input type = "submit" value = "Save Changes" className = "btn btn-primary"></input>
                     </div>
 
                 </form>

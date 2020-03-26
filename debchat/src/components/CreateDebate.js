@@ -8,19 +8,23 @@ export default class CreateDebate extends Component{
         super(props);
 
         this.onChangeTopic = this.onChangeTopic.bind(this);
-        this.onChangeUser = this.onChangeUser.bind(this);
+        //this.onChangeUser = this.onChangeUser.bind(this);
+        this.onChangeProponent = this.onChangeProponent.bind(this);
+        this.onChangeOpponent = this.onChangeOpponent.bind(this);
         this.onChangeDate = this.onChangeDate.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
 
         this.state = {
             // database model
             topic: '',
-            users: [],
+            proponent: '',
+            opponent: '',
             date: new Date(), 
 
             // other properties
          //    users: [],
-             username: ""
+            users: [],
+            username: ""
         }
     }
 
@@ -45,10 +49,19 @@ export default class CreateDebate extends Component{
         );
     }
 
-    onChangeUser(e){
+    onChangeProponent(e){
         this.setState(
             {
-                username: e.target.value
+                proponent: e.target.value
+            }
+        );
+    }
+
+
+    onChangeOpponent(e){
+        this.setState(
+            {
+                opponent : e.target.value
             }
         );
     }
@@ -63,20 +76,13 @@ export default class CreateDebate extends Component{
 
     onSubmit(e){
         e.preventDefault();
-
-        // add the user that creates the debate to the list of users in the debate obj
-        let newUserList = this.state.users;
-        newUserList.push(this.state.username);
-        this.setState(
-            {
-                users: newUserList
-            }
-        );
         
         const debate = {
             topic: this.state.topic,
-            users: this.state.users,
-            date: this.state.date
+            proponent: this.state.proponent,
+            opponent: this.state.opponent,
+            date: this.state.date,
+            conversation: []
 
         }
 
@@ -103,22 +109,35 @@ export default class CreateDebate extends Component{
                         </input>
                     </div>
 
-                    {/* <div className = "form-group">
-                        <label>User: </label>
-                        <input type = "text"
+                    <div className = "form-group">
+                        <label>Proponent:</label>
+                        <select 
+                                required
                                 className = "form-control"
-                                //value = {this.state.username}
-                                onChange = {this.onChangeUser}>
-                        </input>
-                    </div> */}
+                                value = {this.state.proponent}
+                                onChange = {this.onChangeProponent}>
+                            {/* map returns something for each item in the array*/}
 
-                    <select ref = "userInput"
+                            {
+                                this.state.users.map(function(user){
+                                    return <option
+                                            key = {user}
+                                            value = {user}>
+                                                {user}
+                                            </option>
+                                })
+                            }
+                        </select>
+                    </div>
+                   
+                    <div className = "form-group">
+                        <label>Opponent:</label>
+                        <select 
                             required
                             className = "form-control"
-                            value = {this.state.username}
-                            onChange = {this.onChangeUser}>
-                        {/* map returns something for each item in the array*/}
-
+                            value = {this.state.opponent}
+                            onChange = {this.onChangeOpponent}>
+    x                    {/* map returns something for each item in the array*/}
                         {
                             this.state.users.map(function(user){
                                 return <option
@@ -128,7 +147,9 @@ export default class CreateDebate extends Component{
                                         </option>
                             })
                         }
-                            </select>
+                        </select>
+                    </div>
+                    
 
                     <div className = "form-group">
                         <label>Date: </label>
