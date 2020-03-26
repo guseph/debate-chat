@@ -14,6 +14,7 @@ const debateSchema = new Schema({
     opponent: {type: String, required: true},
     date: {type: Date, required: true},
     conversation: {type:Array, required: true},
+    closed: {type: Boolean, required: true}
 } ,
 {timestamps: true,}
 );

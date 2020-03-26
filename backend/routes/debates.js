@@ -19,8 +19,9 @@ router.route('/add').post((req, res) => {
     const opponent = req.body.opponent;
     const date = Date.parse(req.body.date);
     const conversation = req.body.conversation;
+    const closed = req.body.closed;
     
-    const newDebate = new Debate({topic, proponent, opponent, date, conversation});  // create a new Debate
+    const newDebate = new Debate({topic, proponent, opponent, date, conversation, closed});  // create a new Debate
 
 
     newDebate.save()  // new Debate is saved to database
@@ -55,6 +56,7 @@ router.route('/update/:id').post((req, res) => {
         debate.opponent = req.body.opponent;
         debate.date = Date.parse(req.body.date);
         debate.conversation = req.body.conversation;
+        debate.closed = req.body.closed;
         // currently updates all data, may refactor to be selective
 
         debate.save()
@@ -71,6 +73,22 @@ router.route('/update/convo/:id').post((req, res) => {
     Debate.findById(req.params.id)
         .then(debate => {
             debate.conversation = req.body.conversation;
+
+            debate.save()
+                .then(() => res.json('Debate updated!'))
+                .catch(err => res.status(400).json('Error: ' + err));
+        })
+        .catch(err => res.status(400).json('Error: ' + err));
+})
+
+
+// endpoint
+// Updates only a debate's closed parameter via _id
+// Note the url path is slightly different
+router.route('/update/closed/:id').post((req, res) => {
+    Debate.findById(req.params.id)
+        .then(debate => {
+            debate.closed = req.body.closed;
 
             debate.save()
                 .then(() => res.json('Debate updated!'))
