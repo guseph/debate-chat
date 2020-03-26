@@ -4,7 +4,7 @@ import {Link} from 'react-router-dom';
 
 const Debate = props => (
     <tr>
-        <td><Link to = {"debates/" + props.debate._id}>{props.debate.topic}</Link></td>
+        <td><Link to = {"debates/display/" + props.debate._id}>{props.debate.topic}</Link></td>
         <td>{props.debate.proponent}</td>
         <td>{props.debate.opponent}</td>
         <td>{props.debate.date.substring(0,10)}</td>
