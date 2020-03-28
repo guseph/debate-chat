@@ -28,7 +28,67 @@ const usersRouter = require('./routes/users');
 app.use('/debates', debatesRouter);
 app.use('/users', usersRouter);
 
-// listen for changes
-app.listen(port, () => {
-    console.log(`Server is running on port: ${port}`);
+
+
+// // ORIGINAL WITHOUT CHATBOX
+// app.listen(port, () => {
+//     console.log(`Server is running on port: ${port}, through Express`);
+// });
+
+
+//////// FIGURING OUT CHATBOX
+
+// // GET
+// app.get('/', function(req, res) {
+//     res.sendFile('C:/Users/Joseph/Documents/Github/debate-chat/debchat/public/index.html');
+//  });
+
+
+
+
+// // DIFFERENT PORTS
+// let server = require('http').Server(app);
+// let io = require('socket.io')(server);
+
+// io.on('connection', function (socket) {
+//     console.log("a user connected (server)")
+//     socket.emit('news', { hello: 'world' });
+//     socket.on('disconnect', function (data) {
+//       console.log(data);
+//     });
+// });
+
+// server.listen(3001, () => {
+//     console.log(`HTTP Server is running on port: 3001`);
+// })
+
+
+
+
+// // SAME PORTS
+let server = app.listen(port, () => {
+    console.log(`Server is running on port: ${port}, through Express.`);
+    console.log(`HTTP Server also running on port ${port}`);
 })
+
+let io = require('socket.io')(server);  // exposes socket.io for server to use
+
+io.on('connection', function (socket) {  // upon successful connection, do/listen for following
+    console.log("a user connected (server)")  // currently two sockets are created per tab, which is weird. May have to do with how we have io and chatSocket as instance variables
+    socket.on('newMessage', function (data) {
+        console.log(data)
+        // socket.to(data.debateID).emit('updateChatbox');   if rooms are successful, emit to just the room
+        io.emit('updateChatbox');
+        io.emit('updateChatbox');  // probably not the best solution, but the chats are updating inconsistently
+    });
+    socket.on('joinDebate', function (data) {
+        // console.log(data)  // should be debateID, will be used as the unique room identifier
+        // socket.join(data.debateID);   to join a specific room, may make them namespaces instead?
+    })
+    // socket.on('leaveDebate', function(data){  // shouldn't need this, sockets automatically clean up
+    //     socket.leave(data.debateID);
+    // })
+    socket.on('disconnect', function (data) {
+      console.log("a user disconnected (server)");
+    });
+});

@@ -12,6 +12,8 @@ import Debate from "./components/Debate.js";
 import Home from "./components/Home.js";
 import History from "./components/History.js";
 
+import TestChatbox from "./components/TestChatbox.js";
+
 
 function App() {
   return (
@@ -27,6 +29,7 @@ function App() {
           <Route path = "/rules" exact component = {Rules} />
           <Route path = "/debates/display/:id" exact component = {Debate} />
           <Route path = "/debates/history" exact component = {History} />
+          <Route path = "/chatbox" exact component = {TestChatbox} />
 
       </div>
       
