@@ -4,13 +4,13 @@ import axios from 'axios';
 
 const ChatMessage = props => (
     <tr>
-        <td>{props.chatMessage}</td>
-        <td>{props.fromUser}</td>
+        <td>{props.message[1]}</td>
+        <td>{props.message[0]}</td>
     </tr>
     
 )
 
-export default class TestChatbox extends Component{
+export default class ChatBox extends Component{
     constructor (props){
         super(props);
 
@@ -20,7 +20,11 @@ export default class TestChatbox extends Component{
         this.onChangeMessage = this.onChangeMessage.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
         // io: require('socket.io-client'), chatSocket: io('http://localhost:5000'), 
-        this.state = {debateID: "5e7d22e3fa5dc72884aed733", messages: [], currentMessage: "", currentUser: 0}
+        this.state = {
+                    debateID: props.debateID, 
+                    messages: [], 
+                    currentMessage: "", 
+                    currentUser: 0}
     }
 
     componentDidMount(){
@@ -74,7 +78,9 @@ export default class TestChatbox extends Component{
 
     chatMessages(){
         return this.state.messages.map(m => {
-            return <ChatMessage chatMessage={m[1]} fromUser={m[0]}  />
+            console.log(m);
+            return <ChatMessage message = {m} key = {m[0] + m[1]}/>
+            //return <ChatMessage chatMessage={m[1]} fromUser={m[0]}  />
         })
     }
 
@@ -115,7 +121,6 @@ export default class TestChatbox extends Component{
     render(){
         return(
             <div>
-                <h1> Chat Messages </h1>
                 <table className = "table">
                     <thead className = "thead-light">
                         <tr>
@@ -129,15 +134,16 @@ export default class TestChatbox extends Component{
                 </table>
                 <form onSubmit = {this.onSubmit}>
                     <div className = "form-group">
-                        <label>Message: </label>
+                        <label>Type Here: </label>
                         <input type = "text"
                                 required    
                                 className = "form-control"
                                 value = {this.state.currentMessage}
                                 onChange = {this.onChangeMessage} />
                     </div>
-                    <div className = "form-group">
-                        <input type = "submit" value = "Create Message" className = "btn btn-primary" />
+                    <div className = "row">
+                            <input type = "submit" value = "Send Message" className = "btn btn-primary" />
+                        
                     </div>
                 </form>
             </div>

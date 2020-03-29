@@ -26,9 +26,7 @@ export default class NavBar extends Component{
                         <li>
                             <Link to ="/debates/history" className = "nav-link">Debate History</Link>
                         </li>
-                        <li>
-                            <Link to ="/chatbox" className = "nav-link">TestChatbox</Link>
-                        </li>
+                 
                     </ul>
                 </div>
             </nav>

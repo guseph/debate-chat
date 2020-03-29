@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import axios from 'axios';
 import './Debate.css';
+import ChatBox from "./ChatBox.js";
 
 export default class Debate extends Component{
     constructor (props){
@@ -13,7 +14,8 @@ export default class Debate extends Component{
             proponent: "",
             opponent: "",
             conversation: [],
-            date: new Date()
+            date: new Date(),
+            debateId : this.props.match.params.id
         }
     }
 
@@ -34,7 +36,25 @@ export default class Debate extends Component{
 
     // implement this later
     // will save chat messages into the debate item that will be saved to database
-    onSubmit(){
+    onSubmit(e){
+        e.preventDefault();
+        
+        const debate = {
+            topic: this.state.debateName,
+            proponent: this.state.proponent,
+            opponent: this.state.opponent,
+            date: this.state.date,
+            conversation: this.state.conversation,
+            closed: true
+
+        }
+
+        console.log(debate)
+
+        axios.post('http://localhost:5000/debates/update/' + this.props.match.params.id, debate)
+            .then(res => console.log(res.data));
+
+        window.location = "/debates/history";
 
     };
 
@@ -56,19 +76,27 @@ export default class Debate extends Component{
               
 
                 <div className = "row" id = "content">
-                    <div className = "col-6">
+                    <div className = "col-4">
                         <h3>TIMELINE</h3>
                         <p>Timeline will go here</p>
                     </div>
-                    <div className = "container col-6">
-                        <h1>Chatbox will go here</h1>
+                    <div className = "container col-8">
+                        <ChatBox debateID = {this.state.debateId}/>
                     </div>
                 
                 </div>
 
                 <hr></hr>
                <div className = "row container justify-content-center">
-                    <button onClick = {this.onSubmit} className = "btn btn-danger">End Debate</button>
+                   <div className = "col 4">
+                        <button onClick = {this.onSubmit} className = "btn btn-danger">End Debate</button>
+                   </div>
+                   <div className = "col-4">
+                            Time here
+                    </div>
+                    <div className = "col-4">
+
+                    </div>
                </div>
 
             </div>

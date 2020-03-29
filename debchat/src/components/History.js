@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import axios from 'axios';
-//import {Link} from 'react-router-dom';
+import {Link} from 'react-router-dom';
 
 const Debate = props => (
     <tr>
@@ -10,7 +10,11 @@ const Debate = props => (
         <td>{props.debate.proponent}</td>
         <td>{props.debate.opponent}</td>
         <td>{props.debate.date.substring(0,10)}</td> 
-        <td><button>View</button></td>
+        <td> 
+            <Link to = {"debates/history/" + props.debate._id}>View</Link> 
+
+        </td>
+
     </tr>
 )
 

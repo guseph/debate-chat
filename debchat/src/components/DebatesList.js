@@ -28,16 +28,12 @@ export default class DebatesList extends Component{
         axios.get('http://localhost:5000/debates/')
             .then(response =>{
                 this.setState({
-                    debates: response.data
+                    debates: response.data.filter(el => el.closed !== true)
                 })
             })
             .catch((error) =>{
                 console.log(error);
             })
-
-        this.setState({
-            debates: this.state.debates.filter(el => el.closed !== true)
-        })
     }
 
     deleteDebate(id){
