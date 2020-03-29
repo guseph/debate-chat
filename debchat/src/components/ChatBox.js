@@ -22,7 +22,7 @@ export default class ChatBox extends Component{
         // io: require('socket.io-client'), chatSocket: io('http://localhost:5000'), 
         this.state = {
                     debateID: props.debateID, 
-                    messages: [], 
+                    conversation: [], 
                     currentMessage: "", 
                     currentUser: 0}
     }
@@ -31,8 +31,10 @@ export default class ChatBox extends Component{
         // first, get original messages
         axios.get(`http://localhost:5000/debates/convo/${this.state.debateID}`)
             .then(response =>{
+                console.log("CONVERSATION" + response.data.conversation);
+
                 this.setState({
-                    messages: response.data.conversation
+                    conversation: response.data.conversation
                 })
             })
             .catch((error) =>{
@@ -55,8 +57,9 @@ export default class ChatBox extends Component{
                 // get new messages
                 axios.get(`http://localhost:5000/debates/convo/${this.state.debateID}`)
                     .then(response =>{
+
                         this.setState({
-                            messages: response.data.conversation
+                            conversation: response.data.conversation
                         })
                     })
                     .catch((error) =>{
@@ -77,8 +80,7 @@ export default class ChatBox extends Component{
 
 
     chatMessages(){
-        return this.state.messages.map(m => {
-            console.log(m);
+        return this.state.conversation.map(m => {
             return <ChatMessage message = {m} key = {m[0] + m[1]}/>
             //return <ChatMessage chatMessage={m[1]} fromUser={m[0]}  />
         })

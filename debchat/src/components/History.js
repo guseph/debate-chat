@@ -11,7 +11,7 @@ const Debate = props => (
         <td>{props.debate.opponent}</td>
         <td>{props.debate.date.substring(0,10)}</td> 
         <td> 
-            <Link to = {"debates/history/" + props.debate._id}>View</Link> 
+            <Link to = {"/debates/history/" + props.debate._id}>View</Link> 
 
         </td>
 

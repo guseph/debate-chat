@@ -13,7 +13,6 @@ export default class Debate extends Component{
             debateName: "",
             proponent: "",
             opponent: "",
-            conversation: [],
             date: new Date(),
             debateId : this.props.match.params.id
         }
@@ -40,16 +39,16 @@ export default class Debate extends Component{
         e.preventDefault();
         
         const debate = {
-            topic: this.state.debateName,
-            proponent: this.state.proponent,
-            opponent: this.state.opponent,
-            date: this.state.date,
-            conversation: this.state.conversation,
+            // topic: this.state.debateName,
+            // proponent: this.state.proponent,
+            // opponent: this.state.opponent,
+            // date: this.state.date,
+            // conversation: this.state.conversation,
             closed: true
 
-        }
+         }
 
-        console.log(debate)
+        // console.log(debate)
 
         axios.post('http://localhost:5000/debates/update/' + this.props.match.params.id, debate)
             .then(res => console.log(res.data));

@@ -28,11 +28,14 @@ export default class ViewOldDebate extends Component{
         console.log("mounted View OldDebate");
         axios.get('http://localhost:5000/debates/'+this.props.match.params.id)
             .then(response => {
+                console.log("CONVERSATION" + response.data.conversation);
+                console.log(response.data.topic);
                 this.setState({
                     debateName: response.data.topic,
                     proponent: response.data.proponent,
                     opponent: response.data.opponent,
-                    date: new Date(response.data.date)
+                    date: new Date(response.data.date),
+                    conversation: response.data.conversation
                 })
             })
             .catch(function (error){
@@ -41,7 +44,7 @@ export default class ViewOldDebate extends Component{
     }
 
     chatMessages(){
-        return this.state.messages.map(m =>{
+        return this.state.conversation.map(m =>{
             return <Message message = {m[1]} user = {m[0]}></Message>
         })
     }
@@ -58,6 +61,7 @@ export default class ViewOldDebate extends Component{
                     </div>
                     <div className = "row justify-content-center">
                         <i>{this.state.date.toString().substring(0,10)}</i>
+                        <p>{console.log(this.state.conversation)}</p>
                     </div>
                 </div>
                 <hr></hr>

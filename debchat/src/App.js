@@ -11,7 +11,6 @@ import Rules from "./components/Rules.js";
 import Debate from "./components/Debate.js";
 import Home from "./components/Home.js";
 import History from "./components/History.js";
-import ChatBox from "./components/ChatBox.js";
 import ViewOldDebate from './components/ViewOldDebate.js';
 
 
@@ -22,6 +21,7 @@ function App() {
           <NavBar />
           <br />
           <Route path = "/" exact component = {Home} />
+          <Route path = "/debates/history/:id" exact component = {ViewOldDebate} />
           <Route path = "/debates" exact component = {DebatesList} />
           <Route path = "/debates/update/:id" exact component = {UpdateDebate} />
           <Route path = "/debates/add" exact component = {CreateDebate} />
@@ -29,7 +29,6 @@ function App() {
           <Route path = "/rules" exact component = {Rules} />
           <Route path = "/debates/display/:id" exact component = {Debate} />
           <Route path = "/debates/history" exact component = {History} />
-          <Route path = "/debates/history/:id" exact component = {Home} />
 
       </div>
       
