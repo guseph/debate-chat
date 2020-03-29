@@ -11,7 +11,8 @@ const Debate = props => (
         <td>{props.debate.opponent}</td>
         <td>{props.debate.date.substring(0,10)}</td> 
         <td> 
-            <Link to = {"/debates/history/" + props.debate._id}>View</Link> 
+            <Link to = {"/debates/history/" + props.debate._id}>View</Link> | 
+            <a href = "/" onClick = {() => {props.deleteDebate(props.debate._id)}}>delete</a>
 
         </td>
 
@@ -23,6 +24,8 @@ export default class History extends Component{
         super(props);
         
         this.state = {debates: []}
+        this.deleteDebate = this.deleteDebate.bind(this);
+
     }
 
     // get and store closed debates in state
@@ -36,6 +39,19 @@ export default class History extends Component{
             .catch((error) =>{
                 console.log(error);
             })
+    }
+
+    deleteDebate(id){
+        axios.delete('http://localhost:5000/debates/'+id)
+            .then(res => console.log(res.data));
+
+        // get rid of the element from the table by resetting the state
+        // puts all elements back intot the state except the one we deleted
+        this.setState({
+            debates: this.state.debates.filter(el => el._id !== id && el.closed === true)
+        })
+
+        window.location = "/debates/history/";
     }
 
 

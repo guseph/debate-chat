@@ -50,7 +50,7 @@ export default class Debate extends Component{
 
         // console.log(debate)
 
-        axios.post('http://localhost:5000/debates/update/' + this.props.match.params.id, debate)
+        axios.post('http://localhost:5000/debates/update/closed/' + this.props.match.params.id, debate)
             .then(res => console.log(res.data));
 
         window.location = "/debates/history";
