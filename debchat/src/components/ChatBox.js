@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import axios from 'axios';
+import { useAuth0 } from "../react-auth0-spa";
 //import {Link} from 'react-router-dom';
 
 const ChatMessage = props => (
@@ -10,9 +11,10 @@ const ChatMessage = props => (
     
 )
 
-export default class ChatBox extends Component{
+class ChatBox extends Component{
     constructor (props){
         super(props);
+        this.props = props;
 
         this.io = require('socket.io-client');
         this.chatSocket = this.io.connect('http://localhost:5000');
@@ -31,8 +33,6 @@ export default class ChatBox extends Component{
         // first, get original messages
         axios.get(`http://localhost:5000/debates/convo/${this.state.debateID}`)
             .then(response =>{
-                console.log("CONVERSATION" + response.data.conversation);
-
                 this.setState({
                     conversation: response.data.conversation
                 })
@@ -41,11 +41,10 @@ export default class ChatBox extends Component{
                 console.log(error);
             })
 
-
         // socket.io stuff
         
         this.chatSocket.on('connect', () => {  // upon successful connection
-            this.setState({currentUser: this.chatSocket.id});  // set unique user to unique socket ID
+            this.setState({currentUser: this.props.user.nickname});  // set unique user to auth0's nickname, can't figure out how to access username
             this.chatSocket.emit('joinDebate', {debateID: this.state.debateID})  // emit to server that a user was successfully connected
             // ideally have them join the specific debate room, but this isn't working rn
             // right now, I think all chats across all debates will receive everything
@@ -152,3 +151,13 @@ export default class ChatBox extends Component{
         );
     }
 }
+
+function wrapHook(Component){
+    return function WrappedComponent(props) {
+        const { loading, isAuthenticated, user } = useAuth0();
+        return <Component {...props} loading={loading} isAuthenticated={isAuthenticated} user={user} />;
+    }
+}
+
+ChatBox = wrapHook(ChatBox);
+export default ChatBox;

@@ -36,35 +36,6 @@ app.use('/users', usersRouter);
 // });
 
 
-//////// FIGURING OUT CHATBOX
-
-// // GET
-// app.get('/', function(req, res) {
-//     res.sendFile('C:/Users/Joseph/Documents/Github/debate-chat/debchat/public/index.html');
-//  });
-
-
-
-
-// // DIFFERENT PORTS
-// let server = require('http').Server(app);
-// let io = require('socket.io')(server);
-
-// io.on('connection', function (socket) {
-//     console.log("a user connected (server)")
-//     socket.emit('news', { hello: 'world' });
-//     socket.on('disconnect', function (data) {
-//       console.log(data);
-//     });
-// });
-
-// server.listen(3001, () => {
-//     console.log(`HTTP Server is running on port: 3001`);
-// })
-
-
-
-
 // // SAME PORTS
 let server = app.listen(port, () => {
     console.log(`Server is running on port: ${port}, through Express.`);
@@ -78,6 +49,7 @@ io.on('connection', function (socket) {  // upon successful connection, do/liste
     socket.on('newMessage', function (data) {
         console.log(data)
         // socket.to(data.debateID).emit('updateChatbox');   if rooms are successful, emit to just the room
+        io.emit('updateChatbox');
         io.emit('updateChatbox');
         io.emit('updateChatbox');  // probably not the best solution, but the chats are updating inconsistently
     });
