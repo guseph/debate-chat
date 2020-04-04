@@ -26,16 +26,16 @@ function App() {
       <div className = "container">
           <NavBar />
           <br />
-          <Route path = "/" component = {Home} />
-          <Route path = "/debates/history/:id" component = {ViewOldDebate} />
-          <Route path = "/debates" component = {DebatesList} />
-          <Route path = "/debates/update/:id" component = {UpdateDebate} />
-          <Route path = "/debates/add" component = {CreateDebate} />
-          <Route path = "/users/add" component = {CreateUser} />
-          <Route path = "/rules" component = {Rules} />
-          <Route path = "/debates/display/:id" component = {Debate} />
-          <Route path = "/debates/history" component = {History} />
-          <Route path = "/profile" component={Profile} />
+          <Route path = "/" exact component = {Home} />
+          <Route path = "/debates/history/:id" exact component = {ViewOldDebate} />
+          <Route path = "/debates" exact component = {DebatesList} />
+          <Route path = "/debates/update/:id" exact component = {UpdateDebate} />
+          <Route path = "/debates/add" exact component = {CreateDebate} />
+          <Route path = "/users/add" exact component = {CreateUser} />
+          <Route path = "/rules" exact component = {Rules} />
+          <Route path = "/debates/display/:id" exact component = {Debate} />
+          <Route path = "/debates/history" exact component = {History} />
+          <Route path = "/profile" exact component={Profile} />
       </div>
     </Router>
   );
