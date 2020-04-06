@@ -15,7 +15,7 @@ import History from "./components/History.js";
 import ViewOldDebate from './components/ViewOldDebate.js';
 import Profile from './components/Profile.js';
 import history from './utils/history';
-import PrivateRoute from './components/PrivateRoute';
+//import PrivateRoute from './components/PrivateRoute';
 
 
 function App() {

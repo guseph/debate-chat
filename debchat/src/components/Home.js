@@ -1,6 +1,10 @@
 import React from 'react';
+import { useAuth0 } from "../react-auth0-spa";
+
 
 const Home = function(){
+    const { isAuthenticated} = useAuth0();
+
     return(
             <div>
                 <div className="jumbotron">
@@ -9,7 +13,12 @@ const Home = function(){
                     <hr className="my-4"></hr>
                     <p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
                     <p className="lead">
-                        <a className="btn btn-primary btn-lg" href="/debates" role="button">View Debates</a>
+                        {/* {isAuthenticated} */}
+                        {isAuthenticated? 
+                            <a className="btn btn-primary btn-lg" href="/debates" role="button">View Debates</a> 
+                            : <p>Log in to view debates!</p>
+
+                        }
                     </p>
                 </div>
 
