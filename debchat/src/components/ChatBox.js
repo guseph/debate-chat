@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import axios from 'axios';
 import { useAuth0 } from "../react-auth0-spa";
+import ChatMessageList from "./ChatMessageList.js";
 //import {Link} from 'react-router-dom';
 
 const ChatMessage = props => (
@@ -44,6 +45,9 @@ class ChatBox extends Component{
         // socket.io stuff
         
         this.chatSocket.on('connect', () => {  // upon successful connection
+
+            // uncomment next line later, for the sake of editing, i took it out
+
             this.setState({currentUser: this.props.user.nickname});  // set unique user to auth0's nickname, can't figure out how to access username
             this.chatSocket.emit('joinDebate', {debateID: this.state.debateID})  // emit to server that a user was successfully connected
             // ideally have them join the specific debate room, but this isn't working rn
@@ -122,17 +126,10 @@ class ChatBox extends Component{
     render(){
         return(
             <div>
-                <table className = "table">
-                    <thead className = "thead-light">
-                        <tr>
-                            <th>Message</th>
-                            <th>FromUser</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {this.chatMessages()}
-                    </tbody>
-                </table>
+                <div className = "container">
+                     <ChatMessageList conversation = {this.state.conversation} />
+                </div>
+
                 <form onSubmit = {this.onSubmit}>
                     <div className = "form-group">
                         <label>Type Here: </label>
@@ -161,3 +158,5 @@ function wrapHook(Component){
 
 ChatBox = wrapHook(ChatBox);
 export default ChatBox;
+
+

@@ -19,9 +19,12 @@ export default class Timer extends Component{
     }
 
     componentDidMount(){
+        this.setState({
+            isRunning: true
+        })
         this.myInterval = setInterval(() => {
             if (this.state.isRunning){
-                if (this.state.timeLeft == 0)
+                if (this.state.timeLeft === 0)
                 {
                     // stop timer
                     this.setState({
