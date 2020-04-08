@@ -3,7 +3,7 @@ import { useAuth0 } from "../react-auth0-spa";
 
 
 const Home = function(){
-    const { isAuthenticated} = useAuth0();
+    const {isAuthenticated} = useAuth0();
 
     return(
             <div>
@@ -12,14 +12,11 @@ const Home = function(){
                     <p className="lead">A platform to make remote debating simple and easy</p>
                     <hr className="my-4"></hr>
                     <p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
-                    <p className="lead">
-                        {/* {isAuthenticated} */}
-                        {isAuthenticated? 
-                            <a className="btn btn-primary btn-lg" href="/debates" role="button">View Debates</a> 
-                            : <p>Log in to view debates!</p>
+                    {isAuthenticated? 
+                        <a className="btn btn-primary btn-lg" href="/debates" role="button">View Debates</a> 
+                        : <p className = "lead" >Log in to view debates!</p>
 
-                        }
-                    </p>
+                    }
                 </div>
 
             </div>

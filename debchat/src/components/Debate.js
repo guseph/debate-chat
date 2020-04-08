@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import axios from 'axios';
 import './Debate.css';
 import ChatBox from "./ChatBox.js";
+import Timer from "./Timer.js";
 
 export default class Debate extends Component{
     constructor (props){
@@ -76,6 +77,7 @@ export default class Debate extends Component{
 
                 <div className = "row" id = "content">
                     <div className = "col-4">
+                        <Timer startTime = "200" />
                         <h3>TIMELINE</h3>
                         <p>Timeline will go here</p>
                     </div>
@@ -90,9 +92,7 @@ export default class Debate extends Component{
                    <div className = "col 4">
                         <button onClick = {this.onSubmit} className = "btn btn-danger">End Debate</button>
                    </div>
-                   <div className = "col-4">
-                            Time here
-                    </div>
+              
                     <div className = "col-4">
 
                     </div>
