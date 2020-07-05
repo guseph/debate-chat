@@ -13,7 +13,7 @@ const Home = function(){
                     <hr className="my-4"></hr>
                     <p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
                     {isAuthenticated? 
-                        <a className="btn btn-primary btn-lg" href="/debates" role="button">View Debates</a> 
+                        <a className="btn btn-info btn-lg" href="/debates" role="button">View Debates</a> 
                         : <p className = "lead" >Log in to view debates!</p>
 
                     }
