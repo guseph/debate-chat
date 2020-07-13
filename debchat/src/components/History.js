@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
 import axios from 'axios';
 import {Link} from 'react-router-dom';
+import {faTrash, } from '@fortawesome/free-solid-svg-icons';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 
 const Debate = props => (
     <tr>
@@ -11,8 +13,8 @@ const Debate = props => (
         <td>{props.debate.opponent}</td>
         <td>{props.debate.date.substring(0,10)}</td> 
         <td> 
-            <Link to = {"/debates/history/" + props.debate._id}>View</Link> | 
-            <a href = "/" onClick = {() => {props.deleteDebate(props.debate._id)}}>delete</a>
+            <Link class = "btn btn-info " to = {"/debates/history/" + props.debate._id}>View</Link>
+            <button class = "btn btn-danger" href = "/" onClick = {() => {props.deleteDebate(props.debate._id)}}><FontAwesomeIcon icon = {faTrash}></FontAwesomeIcon></button>
 
         </td>
 

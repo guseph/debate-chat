@@ -20,7 +20,6 @@ export default class DebatesList extends Component{
         super(props);
 
         this.deleteDebate = this.deleteDebate.bind(this);
-        
         this.state = {debates: []}
     }
 

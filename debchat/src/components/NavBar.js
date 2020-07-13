@@ -1,8 +1,7 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
 import { useAuth0 } from "../react-auth0-spa";
-
-import {faCoffee, faPencilAlt, faBook, faComments, faScroll, faUser} from '@fortawesome/free-solid-svg-icons';
+import {faUser} from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 
 const NavBar = () => {
@@ -10,9 +9,9 @@ const NavBar = () => {
 
     {/* Links that appear when user is logged in */}
     var authLinks = [
-        (<Link to = "/debates" key = "debates" className = "nav-link navbar-item"> <FontAwesomeIcon icon = {faComments} />  Debates  </Link>),
-        (<Link to = "/debates/add" key = "createDebate" className = "nav-link navbar-item"><FontAwesomeIcon icon = {faPencilAlt} />   Create New Debate  </Link>),
-        (<Link to ="/debates/history" key = "debateHistory" className = "nav-link navbar-item"> <FontAwesomeIcon icon = {faBook} />  Debate History  </Link>),
+        (<Link to = "/debates" key = "debates" className = "nav-link navbar-item">  Debates  </Link>),
+        (<Link to = "/debates/add" key = "createDebate" className = "nav-link navbar-item">  Create New Debate  </Link>),
+        (<Link to ="/debates/history" key = "debateHistory" className = "nav-link navbar-item">  Debate History  </Link>),
     ];
 
     var noAuthLinks = [];
@@ -24,14 +23,14 @@ const NavBar = () => {
     return(
         <nav className = "navbar navbar-dark bg-dark navbar-expand-lg">
             <Link to = "/" className = "navbar-brand"> DebateChat </Link>
-            <button class = "navbar-toggler" type = "button" data-toggle = "collapse" data-target = "#toggler" area-controls = "toggler" area-expanded="false" aria-label="Toggle navigation">
-                <span class = "navbar-toggler-icon"></span>
+            <button className = "navbar-toggler" type = "button" data-toggle = "collapse" data-target = "#toggler" area-controls = "toggler" area-expanded="false" aria-label="Toggle navigation">
+                <span className = "navbar-toggler-icon"></span>
             </button>
             <div className = "collapse navbar-collapse" id="toggler">
 
                 {/* Left side of Navbar */}
                 <div className = "navbar-nav mr-auto mt-2 mt-lg-0">
-                    <Link to ="/rules" key = "rules" className = "nav-link nav-item"> <FontAwesomeIcon icon = {faScroll} />  Rules </Link>
+                    <Link to ="/rules" key = "rules" className = "nav-link nav-item">  Rules </Link>
                     {visibleLinks}
                 </div>
                 
