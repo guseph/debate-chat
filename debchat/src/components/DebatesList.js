@@ -1,42 +1,42 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import axios from 'axios';
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 const Debate = props => (
     <tr>
-        <td><Link to = {"debates/display/" + props.debate._id}>{props.debate.topic}</Link></td>
+        <td><Link to={"debates/display/" + props.debate._id}>{props.debate.topic}</Link></td>
         <td>{props.debate.proponent}</td>
         <td>{props.debate.opponent}</td>
-        <td>{props.debate.date.substring(0,10)}</td>
+        <td>{props.debate.date.substring(0, 10)}</td>
         <td>
-            <Link to = {"debates/update/" + props.debate._id}>edit</Link> |  <a href = "/" onClick = {() => {props.deleteDebate(props.debate._id)}}>delete</a>
+            <Link to={"debates/update/" + props.debate._id}>edit</Link> |  <a href="/" onClick={() => { props.deleteDebate(props.debate._id) }}>delete</a>
         </td>
     </tr>
-    
+
 )
 
-export default class DebatesList extends Component{
-    constructor (props){
+export default class DebatesList extends Component {
+    constructor(props) {
         super(props);
 
         this.deleteDebate = this.deleteDebate.bind(this);
-        this.state = {debates: []}
+        this.state = { debates: [] }
     }
 
-    componentDidMount(){
+    componentDidMount() {
         axios.get('http://localhost:5000/debates/')
-            .then(response =>{
+            .then(response => {
                 this.setState({
                     debates: response.data.filter(el => el.closed !== true)
                 })
             })
-            .catch((error) =>{
+            .catch((error) => {
                 console.log(error);
             })
     }
 
-    deleteDebate(id){
-        axios.delete('http://localhost:5000/debates/'+id)
+    deleteDebate(id) {
+        axios.delete('http://localhost:5000/debates/' + id)
             .then(res => console.log(res.data));
 
         // get rid of the element from the table by resetting the state
@@ -48,18 +48,18 @@ export default class DebatesList extends Component{
         window.location = "/debates";
     }
 
-    debateList(){
+    debateList() {
         return this.state.debates.map(currentdebate => {
-            return <Debate debate = {currentdebate} deleteDebate = {this.deleteDebate} key = {currentdebate._id} />
+            return <Debate debate={currentdebate} deleteDebate={this.deleteDebate} key={currentdebate._id} />
         })
     }
 
-    render(){
-        return(
+    render() {
+        return (
             <div>
                 <h1> Open Debates </h1>
-                <table className = "table">
-                    <thead className = "thead-light">
+                <table className="table">
+                    <thead className="thead-light">
                         <tr>
                             <th>Topic</th>
                             <th>Proponent</th>

@@ -1,8 +1,8 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import axios from 'axios';
-import {Link} from 'react-router-dom';
-import {faTrash, } from '@fortawesome/free-solid-svg-icons';
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import { Link } from 'react-router-dom';
+import { faTrash, } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const Debate = props => (
     <tr>
@@ -11,40 +11,40 @@ const Debate = props => (
         <td>{props.debate.topic}</td>
         <td>{props.debate.proponent}</td>
         <td>{props.debate.opponent}</td>
-        <td>{props.debate.date.substring(0,10)}</td> 
-        <td> 
-            <Link class = "btn btn-info " to = {"/debates/history/" + props.debate._id}>View</Link>
-            <button class = "btn btn-danger" href = "/" onClick = {() => {props.deleteDebate(props.debate._id)}}><FontAwesomeIcon icon = {faTrash}></FontAwesomeIcon></button>
+        <td>{props.debate.date.substring(0, 10)}</td>
+        <td>
+            <Link class="btn btn-info " to={"/debates/history/" + props.debate._id}>View</Link>
+            <button class="btn btn-danger" href="/" onClick={() => { props.deleteDebate(props.debate._id) }}><FontAwesomeIcon icon={faTrash}></FontAwesomeIcon></button>
 
         </td>
 
     </tr>
 )
 
-export default class History extends Component{
-    constructor (props){
+export default class History extends Component {
+    constructor(props) {
         super(props);
-        
-        this.state = {debates: []}
+
+        this.state = { debates: [] }
         this.deleteDebate = this.deleteDebate.bind(this);
 
     }
 
     // get and store closed debates in state
-    componentDidMount(){
+    componentDidMount() {
         axios.get('http://localhost:5000/debates/')
-            .then(response =>{
+            .then(response => {
                 this.setState({
                     debates: response.data.filter(el => el.closed === true)
                 })
             })
-            .catch((error) =>{
+            .catch((error) => {
                 console.log(error);
             })
     }
 
-    deleteDebate(id){
-        axios.delete('http://localhost:5000/debates/'+id)
+    deleteDebate(id) {
+        axios.delete('http://localhost:5000/debates/' + id)
             .then(res => console.log(res.data));
 
         // get rid of the element from the table by resetting the state
@@ -57,25 +57,24 @@ export default class History extends Component{
     }
 
 
-    debateList(){
-        if (this.state.debates.length === 0)
-        {
-            return(<tr><td>There are no closed debates</td></tr>);
+    debateList() {
+        if (this.state.debates.length === 0) {
+            return (<tr><td>There are no closed debates</td></tr>);
         }
-        else{
+        else {
             return this.state.debates.map(currentdebate => {
-                return <Debate debate = {currentdebate} deleteDebate = {this.deleteDebate} key = {currentdebate._id} />
+                return <Debate debate={currentdebate} deleteDebate={this.deleteDebate} key={currentdebate._id} />
             });
         }
-       
+
     }
 
-    render(){
-        return(
+    render() {
+        return (
             <div>
                 <h1> Logged Debates </h1>
-                <table className = "table">
-                    <thead className = "thead-light">
+                <table className="table">
+                    <thead className="thead-light">
                         <tr>
                             <th>Topic</th>
                             <th>Proponent</th>

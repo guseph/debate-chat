@@ -1,10 +1,10 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import axios from 'axios';
 
-export default class CreateDebate extends Component{
-    constructor (props){
+export default class CreateDebate extends Component {
+    constructor(props) {
         super(props);
 
         this.onChangeTopic = this.onChangeTopic.bind(this);
@@ -19,20 +19,20 @@ export default class CreateDebate extends Component{
             topic: '',
             proponent: '',
             opponent: '',
-            date: new Date(), 
+            date: new Date(),
 
             // other properties
-         //    users: [],
+            //    users: [],
             users: [],
             username: ""
         }
     }
 
     // alter this later
-    componentDidMount(){
+    componentDidMount() {
         axios.get('http://localhost:5000/users/')
-            .then(response =>{
-                if(response.data.length > 0){
+            .then(response => {
+                if (response.data.length > 0) {
                     this.setState({
                         users: response.data.map(user => user.username),
                         //username: response.data[0].username
@@ -41,7 +41,7 @@ export default class CreateDebate extends Component{
             })
     }
 
-    onChangeTopic(e){
+    onChangeTopic(e) {
         this.setState(
             {
                 topic: e.target.value
@@ -49,7 +49,7 @@ export default class CreateDebate extends Component{
         );
     }
 
-    onChangeProponent(e){
+    onChangeProponent(e) {
         this.setState(
             {
                 proponent: e.target.value
@@ -58,15 +58,15 @@ export default class CreateDebate extends Component{
     }
 
 
-    onChangeOpponent(e){
+    onChangeOpponent(e) {
         this.setState(
             {
-                opponent : e.target.value
+                opponent: e.target.value
             }
         );
     }
 
-    onChangeDate(date){
+    onChangeDate(date) {
         this.setState(
             {
                 date: date
@@ -74,9 +74,9 @@ export default class CreateDebate extends Component{
         );
     }
 
-    onSubmit(e){
+    onSubmit(e) {
         e.preventDefault();
-        
+
         const debate = {
             topic: this.state.topic,
             proponent: this.state.proponent,
@@ -96,78 +96,78 @@ export default class CreateDebate extends Component{
         window.location = "/debates";
     }
 
-    render(){
-        return(
+    render() {
+        return (
             <div>
                 <h1>Create New Debate</h1>
-                <form onSubmit = {this.onSubmit}>
-                    <div className = "form-group">
+                <form onSubmit={this.onSubmit}>
+                    <div className="form-group">
                         <label>Topic: </label>
-                        <input type = "text"
-                                className = "form-control"
-                                value = {this.state.topic}
-                                required
-                                onChange = {this.onChangeTopic}>
+                        <input type="text"
+                            className="form-control"
+                            value={this.state.topic}
+                            required
+                            onChange={this.onChangeTopic}>
                         </input>
                     </div>
 
-                    <div className = "form-group">
+                    <div className="form-group">
                         <label>Proponent:</label>
-                        <select 
-                                required
-                                className = "form-control"
-                                value = {this.state.proponent}
-                                onChange = {this.onChangeProponent}>
+                        <select
+                            required
+                            className="form-control"
+                            value={this.state.proponent}
+                            onChange={this.onChangeProponent}>
                             {/* map returns something for each item in the array*/}
                             <option value="">--Please choose a user--</option>
 
                             {
-                                this.state.users.map(function(user){
+                                this.state.users.map(function (user) {
                                     return <option
-                                            key = {user}
-                                            value = {user}>
-                                                {user}
-                                            </option>
+                                        key={user}
+                                        value={user}>
+                                        {user}
+                                    </option>
                                 })
                             }
                         </select>
                     </div>
-                   
-                    <div className = "form-group">
-                        <label>Opponent:</label>
-                        <select 
-                            required
-                            className = "form-control"
-                            value = {this.state.opponent}
-                            onChange = {this.onChangeOpponent}>
-    x                    {/* map returns something for each item in the array*/}
-                        <option value="">--Please choose a user--</option>
 
-                        {
-                            this.state.users.map(function(user){
-                                return <option
-                                        key = {user}
-                                        value = {user}>
-                                            {user}
-                                        </option>
-                            })
-                        }
+                    <div className="form-group">
+                        <label>Opponent:</label>
+                        <select
+                            required
+                            className="form-control"
+                            value={this.state.opponent}
+                            onChange={this.onChangeOpponent}>
+                            x                    {/* map returns something for each item in the array*/}
+                            <option value="">--Please choose a user--</option>
+
+                            {
+                                this.state.users.map(function (user) {
+                                    return <option
+                                        key={user}
+                                        value={user}>
+                                        {user}
+                                    </option>
+                                })
+                            }
                         </select>
                     </div>
-                    
 
-                    <div className = "form-group">
+
+                    <div className="form-group">
                         <label>Date: </label>
                         <div>
                             <DatePicker
-                                selected = {this.state.date}
-                                onChange = {this.onChangeDate}
+                                selected={this.state.date}
+                                onChange={this.onChangeDate}
                             />
                         </div>
                     </div>
 
-                    <div className = "form-group">
-                        <input type = "submit" value = "Create Debate" className = "btn btn-primary"></input>
+                    <div className="form-group">
+                        <input type="submit" value="Create Debate" className="btn btn-primary"></input>
                     </div>
 
                 </form>
