@@ -3,6 +3,7 @@ import axios from 'axios';
 import './Debate.css';
 import ChatBox from "./ChatBox.js";
 import Timer from "./Timer.js";
+import Timeline from './Timeline';
 
 export default class Debate extends Component {
     constructor(props) {
@@ -78,11 +79,10 @@ export default class Debate extends Component {
                 <div className="row" id="content">
                     <div className="col-4">
                         <Timer startTime="200" />
-                        <h3>TIMELINE</h3>
-                        <p>Timeline will go here</p>
+                        <Timeline />
                     </div>
                     <div className="container col-8">
-                        <ChatBox debateID={this.state.debateId} />
+                        {/* <ChatBox debateID={this.state.debateId} /> */}
                     </div>
 
                 </div>
